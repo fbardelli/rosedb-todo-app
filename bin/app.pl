@@ -9,7 +9,7 @@ get '/hello/:name' => sub {
 
 get '/showdb' => sub {
   my $dbh = DBI->connect("dbi:SQLite:dbname=db/todo","","");
-  my $sth = $dbh->prepare('select * from status');
+  my $sth = $dbh->prepare('select * from status_code');
   $sth->execute;
   my $str ="";
   while (my $row = $sth->fetchrow_hashref){
