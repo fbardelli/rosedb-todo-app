@@ -5,5 +5,5 @@ CREATE TABLE tasks (
     start_date DATETIME,
     end_date DATETIME,
     status_id INTEGER,
-    FOREIGN KEY(status_id) REFERENCES status(id)
+    FOREIGN KEY(status_id) REFERENCES status_code(id)
 );

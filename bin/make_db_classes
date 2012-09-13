@@ -1,0 +1,9 @@
+use Rose::DB::Object::Loader;
+use Todo::DB;
+my $loader = Rose::DB::Object::Loader->new(
+    db => Todo::DB->new(),
+    class_prefix => 'Todo::DB::ORM'
+);
+use Data::Dumper;
+#warn Dumper $loader->make_classes();
+$loader->make_modules(module_dir=> 'lib/');
