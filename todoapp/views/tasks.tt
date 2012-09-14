@@ -1,0 +1,3 @@
+<% WHILE ( task = tasks.next ) %>
+	<% task.long_description %>
+<% END %>
