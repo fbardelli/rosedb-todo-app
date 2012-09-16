@@ -1,3 +1,53 @@
+<script>
+function delete_task(task_id){
+	$.ajax({
+		url: "/task/"+task_id,
+		type: 'DELETE',
+		success: function(msg){
+			window.location.reload();
+		}
+	});
+}
+</script>
+<table border=1>
+	<tr>
+		<th>id</th>
+		<th>short description</th>
+		<th>long description</th>
+		<th>start date</th>
+		<th>end date</th>
+		<th>status</th>
+		<th>delete</th>
+	</tr>
 <% WHILE ( task = tasks.next ) %>
-	<% task.long_description %>
+	<tr>
+		<td><% task.id %></td>
+		<td><% task.short_description %></td>
+		<td><% task.long_description %></td>
+		<td><% task.start_date.strftime("%F %H:%M:%S") %></td>
+		<td><% task.end_date.strftime("%F %H:%M:%S") %></td>
+		<td><% task.status.name %></td>
+		<td><input type="button" onclick="delete_task(<% task.id %>)" value="Delete Task"/></form></td>
+	</tr>
 <% END %>
+</table>
+<br/>
+<form method=POST>
+	<table>
+		<tr><td>short description</td><td><input name="short_description"/></td></tr>
+		<tr><td>long description</td><td><input name="long_description"/></td></tr>
+		<tr><td>start date</td><td><input type=date name="start_date"/></td></tr>
+		<tr><td>end date</td><td><input type=date name="end_date"/></td></tr>
+		<tr>
+			<td>status</td>
+			<td>
+				<select name="status">
+					<% WHILE ( status = status_codes.next ) %>
+						<option value=<%status.id%>><% status.name %></option>
+					<% END %>
+				</select>
+			</td>
+		</tr>
+		<tr><td colspan=2><input type="submit" value="Create New Task"/></td></tr>
+	</table>
+</form>
