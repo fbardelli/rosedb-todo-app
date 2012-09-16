@@ -6,4 +6,4 @@ my $loader = Rose::DB::Object::Loader->new(
 );
 use Data::Dumper;
 #warn Dumper $loader->make_classes();
-$loader->make_modules(module_dir=> 'lib/');
+$loader->make_modules(module_dir=> 'todoapp/lib/');

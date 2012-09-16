@@ -2,7 +2,7 @@
 use inc::Module::Install;
 
 name 'Todo-App';
-all_from 'lib/Todo/App.pm';
+all_from 'todoapp/lib/Todo/App.pm';
 
 requires 'Rose::DB::Object';
 requires 'DBI';
@@ -29,7 +29,7 @@ install_db_class_maker :
 clean :: clean_generated_classes
 
 clean_generated_classes :
-\t\$(RM_RF) lib/Todo/DB/ORM/
+\t\$(RM_RF) todoapp/lib/Todo/DB/ORM/
 
 EOP
 
