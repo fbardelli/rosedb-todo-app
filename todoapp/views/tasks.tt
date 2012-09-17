@@ -1,3 +1,6 @@
+<form>
+Filter: <input name="filter" value="<% task_filter %>" />
+</form>
 <script>
 function delete_task(task_id){
 	$.ajax({
@@ -11,12 +14,12 @@ function delete_task(task_id){
 </script>
 <table border=1>
 	<tr>
-		<th>id</th>
-		<th>short description</th>
-		<th>long description</th>
-		<th>start date</th>
-		<th>end date</th>
-		<th>status</th>
+		<th><a href="?sort_field=id">id</a></th>
+		<th><a href="?sort_field=short_description">short description</a></th>
+		<th><a href="?sort_field=long_description">long description</a></th>
+		<th><a href="?sort_field=start_date">start date</a></th>
+		<th><a href="?sort_field=end_date">end date</a></th>
+		<th><a href="?sort_field=status_id">status</a></th>
 		<th>delete</th>
 	</tr>
 <% WHILE ( task = tasks.next ) %>
@@ -35,7 +38,7 @@ function delete_task(task_id){
 <form method=POST>
 	<table>
 		<tr><td>short description</td><td><input name="short_description"/></td></tr>
-		<tr><td>long description</td><td><input name="long_description"/></td></tr>
+		<tr><td>long description</td><td><textarea name="long_description"></textarea></td></tr>
 		<tr><td>start date</td><td><input type=date name="start_date"/></td></tr>
 		<tr><td>end date</td><td><input type=date name="end_date"/></td></tr>
 		<tr>
