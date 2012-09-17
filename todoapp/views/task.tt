@@ -1,0 +1,28 @@
+<script>
+function update_task(task_id){
+	$.ajax({
+		url: "/task/"+task_id,
+		type: 'PUT',
+		data : {
+			short_description: $('#short_description').val(),
+			long_description: $('#long_description').val(),
+			start_date: $('#start_date').val(),
+			end_date: $('#end_date').val(),
+			status: $('#status').val(),
+			id: task_id,
+		},
+		success: function(msg){
+			window.location = '/tasks';
+		}
+	});
+}
+</script>
+<form>
+	<table>
+<% PROCESS task_form.tt 
+	task = task
+	status_codes => status_codes
+%>
+	<tr><td colspan=2><input type="button" value="Save" onclick="update_task(<%task.id%>)" /></td></tr>
+	</table>
+</form>
