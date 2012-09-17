@@ -10,7 +10,7 @@ get '/tasks' => sub {
     my $tasks = Todo::DB::ORM::Task::Manager->get_tasks_iterator(
         sort_by => params->{sort_field} || 'id',
         (
-			params->{filter}
+            params->{filter}
             ? (
                 query => [
                     or => [
@@ -19,8 +19,8 @@ get '/tasks' => sub {
                     ]
                 ]
               )
-			: ()
-		)
+            : ()
+         )
     );
     my $status_codes =
       Todo::DB::ORM::StatusCode::Manager->get_status_code_iterator;
