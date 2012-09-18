@@ -1,11 +1,12 @@
 		<tr><td>short description</td><td><input id="short_description" name="short_description" value="<% task ? task.short_description : '' %>"/></td></tr>
-		<tr><td>long description</td><td><textarea id="long_description" name="long_description"><% task ? task.short_description : '' %></textarea></td></tr>
+		<tr><td>long description</td><td><textarea id="long_description" name="long_description"><% task ? task.long_description : '' %></textarea></td></tr>
 		<tr><td>start date</td><td><input type=date id="start_date" name="start_date" value="<% task ? task.start_date.strftime('%F') : '' %>"/></td></tr>
 		<tr><td>end date</td><td><input type=date id="end_date" name="end_date" value="<% task ? task.end_date.strftime('%F') : '' %>"/></td></tr>
 		<tr>
 			<td>status</td>
 			<td>
-				<select id="status" name="status">
+				<%# status_codes = task.status.class.get_status_codes_iterator %>
+				<select id="status_id" name="status_id">
 					<% WHILE ( status = status_codes.next ) %>
 						<option value=<%status.id%> <% IF task %><%IF task.status_id == status.id %>selected<%END%><%END%>><% status.name %></option>
 					<% END %>

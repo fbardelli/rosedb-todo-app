@@ -8,8 +8,8 @@ function update_task(task_id){
 			long_description: $('#long_description').val(),
 			start_date: $('#start_date').val(),
 			end_date: $('#end_date').val(),
-			status: $('#status').val(),
-			id: task_id,
+			status_id: $('#status_id').val(),
+			id: task_id
 		},
 		success: function(msg){
 			window.location = '/tasks';
