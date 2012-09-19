@@ -3,8 +3,6 @@ use Dancer ':syntax';
 use Data::Dumper;
 use Todo::DB::ORM::Task;
 use Todo::DB::ORM::Task::Manager;
-use Todo::DB::ORM::StatusCode::Manager;
-
 our $VERSION = '0.1';
 
 get '/tasks' => sub {
@@ -23,9 +21,10 @@ get '/tasks' => sub {
 			: ()
 		)
 	);
-	my $status_codes = Todo::DB::ORM::StatusCode::Manager->get_status_codes_iterator;
+	my $iterators = get_table_iterators();
+	#my $status_codes = Todo::DB::ORM::StatusCode::Manager->get_status_codes_iterator;
 	template 'tasks',
-	  { tasks => $tasks, status_codes => $status_codes, task_filter => params->{filter} };
+	  { tasks => $tasks, iterators => $iterators, task_filter => params->{filter} };
 };
 
 post '/tasks' => sub {
@@ -34,7 +33,9 @@ post '/tasks' => sub {
 		long_description  => params->{long_description},
 		start_date        => params->{start_date},
 		end_date          => params->{end_date},
-		status_id         => params->{status_id}
+		status_id         => params->{status_id},
+		task_type_id	  => params->{task_type_id},
+		importance_id     => params->{importance_id}
 	);
 	$task->save or die($!);
 	return forward '/tasks', {}, { method => 'GET' };
@@ -47,9 +48,9 @@ del '/task/:task_id' => sub {
 
 get '/task/:task_id' => sub {
 	my $task = Todo::DB::ORM::Task->new( id => params->{task_id} );
-	my $status_codes = Todo::DB::ORM::StatusCode::Manager->get_status_codes_iterator;
+	my $iterators = get_table_iterators();
 	$task->load;
-	template 'task', { task => $task, status_codes => $status_codes };
+	template 'task', { task => $task, iterators => $iterators };
 };
 
 put '/task/:task_id' => sub {
@@ -60,13 +61,24 @@ put '/task/:task_id' => sub {
 			start_date        => params->{start_date},
 			end_date          => params->{end_date},
 			status_id         => params->{status_id},
-			task_type_id      => 1,
-			importance_id     => 1
+			task_type_id	  => params->{task_type_id},
+			importance_id     => params->{importance_id}
 		},
 		where => [
 			id  => params->{task_id},
 		]
 	);
 };
+
+sub get_table_iterators {
+	require Todo::DB::ORM::StatusCode::Manager;
+	require Todo::DB::ORM::Importance::Manager;
+	require Todo::DB::ORM::TaskType::Manager;
+	return {
+		status_codes => Todo::DB::ORM::StatusCode::Manager->get_status_codes_iterator,
+		task_types   => Todo::DB::ORM::TaskType::Manager->get_task_types_iterator,
+		importance   => Todo::DB::ORM::Importance::Manager->get_importance_iterator
+	};
+}
 
 true;

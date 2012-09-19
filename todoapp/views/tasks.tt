@@ -20,6 +20,8 @@ function delete_task(task_id){
 		<th><a href="?sort_field=start_date">start date</a></th>
 		<th><a href="?sort_field=end_date">end date</a></th>
 		<th><a href="?sort_field=status_id">status</a></th>
+		<th><a href="?sort_field=task_type_id">task type</a></th>
+		<th><a href="?sort_field=importance_id">importance</a></th>
 		<th>delete</th>
 	</tr>
 <% WHILE ( task = tasks.next ) %>
@@ -30,6 +32,8 @@ function delete_task(task_id){
 		<td><% task.start_date.strftime("%F %H:%M:%S") %></td>
 		<td><% task.end_date.strftime("%F %H:%M:%S") %></td>
 		<td><% task.status.name %></td>
+		<td><% task.task_type.name %></td>
+		<td><% task.importance.name %></td>
 		<td><input type="button" onclick="delete_task(<% task.id %>)" value="Delete Task"/></form></td>
 	</tr>
 <% END %>
@@ -38,7 +42,7 @@ function delete_task(task_id){
 <form method=POST>
 	<table>
 		<% PROCESS task_form.tt
-			status_codes = status_codes
+			iterators = iterators	
 		%>
 		<tr><td colspan=2><input type="submit" value="Create New Task"/></td></tr>
 	</table>

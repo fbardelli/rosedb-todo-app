@@ -7,8 +7,28 @@
 			<td>
 				<%# status_codes = task.status.class.get_status_codes_iterator %>
 				<select id="status_id" name="status_id">
-					<% WHILE ( status = status_codes.next ) %>
+					<% WHILE ( status = iterators.status_codes.next ) %>
 						<option value=<%status.id%> <% IF task %><%IF task.status_id == status.id %>selected<%END%><%END%>><% status.name %></option>
+					<% END %>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Task Type</td>
+			<td>
+				<select id="task_type_id" name="task_type_id">
+					<% WHILE ( task_type = iterators.task_types.next ) %>
+						<option value=<%task_type.id%> <% IF task %><%IF task.task_type_id == task_type.id %>selected<%END%><%END%>><% task_type.name %></option>
+					<% END %>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Importance</td>
+			<td>
+				<select id="importance_id" name="importance_id">
+					<% WHILE ( importance = iterators.importance.next ) %>
+						<option value=<%importance.id%> <% IF task %><%IF task.importance_id == importance.id %>selected<%END%><%END%>><% importance.name %></option>
 					<% END %>
 				</select>
 			</td>
